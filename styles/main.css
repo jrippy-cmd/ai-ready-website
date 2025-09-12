@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brand link color */
+a { color: hsl(var(--primary)); }
+a:hover { color: hsl(var(--primary) / 0.9); }
+
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -21,67 +25,74 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    /* Surfaces */
+    --background: 0 0% 100%;       /* #FFFFFF */
+    --foreground: 0 0% 7.8%;       /* #141414 */
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 0 0% 7.8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 0 0% 7.8%;
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    /* Localhowl brand blue */
+    --primary: 217 98% 51%;        /* #0865FC */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    /* Subtle surfaces */
+    --secondary: 0 0% 95.7%;       /* #F4F4F4 */
+    --secondary-foreground: 0 0% 7.8%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 0 0% 95.7%;           /* #F4F4F4 */
+    --muted-foreground: 0 0% 40%;  /* #666666 */
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    /* Accent surfaces */
+    --accent: 0 0% 95.7%;
+    --accent-foreground: 0 0% 7.8%;
 
-    --destructive: 0 84.2% 60.2%;
+    /* Feedback */
+    --destructive: 0 84% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    /* Framing */
+    --border: 0 0% 90%;            /* #E6E6E6 */
+    --input: 0 0% 90%;
+    --ring: 217 98% 51%;           /* brand for focus outlines */
 
-    --radius: 0.5rem;
+    /* Global rounding */
+    --radius: 0.75rem;
   }
 
-  /* Temporarily disable dark mode until we migrate to semantic colors */
-  /* .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+  /* Dark theme */
+  .dark {
+    --background: 0 0% 7.5%;
+    --foreground: 0 0% 95%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 7.5%;
+    --card-foreground: 0 0% 95%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 7.5%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
+    --primary: 217 95% 60%;        /* brighter brand for dark */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 6% 12%;
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 220 6% 12%;
+    --muted-foreground: 0 0% 62.7%;
 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 220 6% 12%;
+    --accent-foreground: 0 0% 95%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 70% 40%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-  } */
+    --border: 220 6% 18%;
+    --input: 220 6% 18%;
+    --ring: 217 95% 60%;
+  }
 }
 
 @layer utilities {
@@ -92,7 +103,7 @@
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
     -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    scrollbar-width: none;     /* Firefox */
   }
 }
 
@@ -133,9 +144,7 @@
   animation: contentShow 500ms cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 101;
 }
-.DialogContent:focus {
-  outline: none;
-}
+.DialogContent:focus { outline: none; }
 
 .DialogTitle {
   margin: 0;
@@ -150,6 +159,7 @@
   font-size: 15px;
   line-height: 1.5;
 }
+
 .FireButton {
   color: #f8fafc;
   background-color: #111827;
@@ -159,60 +169,41 @@
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   transition: box-shadow 0.3s ease;
 }
-
-.FireButton:hover {
-  box-shadow: 0 0 8px 2px #ff5d22af;
-}
+.FireButton:hover { box-shadow: 0 0 8px 2px #ff5d22af; }
 
 @keyframes overlayShow {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 @keyframes contentShow {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
-.blog-heading:target {
-  padding-bottom: 120px !important;
-}
+.blog-heading:target { padding-bottom: 120px !important; }
 
 @layer utilities {
   .extra-space {
     position: relative;
-
-    &::after {
-      --target-size: 20px;
-
-      content: '';
-      position: absolute;
-      inset: var(--target-size);
-    }
+  }
+  .extra-space::after {
+    --target-size: 20px;
+    content: '';
+    position: absolute;
+    inset: var(--target-size);
   }
 
   .marquee-animation {
-    animation: marquee var(--speed, 10s) linear infinite
-      var(--direction, forwards);
+    animation: marquee var(--speed, 10s) linear infinite var(--direction, forwards);
   }
 
   @keyframes marquee {
-    to {
-      transform: translateX(-50%);
-    }
+    to { transform: translateX(-50%); }
   }
 }
 
+/* Hide reCAPTCHA badge if present */
 .grecaptcha-badge { visibility: hidden; }
 
 /* Remove all focus styles from hero input */
