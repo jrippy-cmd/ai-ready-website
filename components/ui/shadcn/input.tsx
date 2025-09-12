@@ -3,22 +3,34 @@ import { cn } from "@/utils/cn";
 
 const Input = forwardRef<
   HTMLInputElement,
-  React.ComponentPropsWithoutRef<"input">
+  React.InputHTMLAttributes<HTMLInputElement>
 >(({ className, ...props }, ref) => {
   return (
     <label
       className={cn(
-        "py-8 px-12 rounded-8 transition-all w-full block gap-4 cursor-text",
-        "relative bg-accent-white",
-        "before:inside-border before:border-black-alpha-8 hover:before:border-black-alpha-12 hover:bg-black-alpha-2 focus-within:!bg-accent-white focus-within:before:!border-heat-100 focus-within:before:!border-[1.25px]",
+        // layout
+        "block w-full cursor-text rounded-8 px-12 py-8 transition-all",
+        // base surface & border (tokens)
+        "bg-background text-foreground border border-border",
+        // hover/active nuance
+        "hover:bg-secondary",
+        // focus ring on the wrapper when the input is focused
+        "focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
+        // disabled style if consumer passes disabled on the input
+        "aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
+        // typography
         "text-body-medium",
-        className,
+        className
       )}
+      aria-disabled={props.disabled ? true : undefined}
     >
       <input
         ref={ref}
-        className="outline-none w-full resize-none bg-transparent"
         {...props}
+        className={cn(
+          "w-full bg-transparent outline-none placeholder:text-muted-foreground",
+          "disabled:cursor-not-allowed"
+        )}
       />
     </label>
   );
