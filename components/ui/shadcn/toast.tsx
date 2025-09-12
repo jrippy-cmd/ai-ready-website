@@ -1,27 +1,46 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { Toaster as Sonner } from "sonner";
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
+/**
+ * Tokenized toaster aligned to Localhowl’s design system.
+ * Drop this near the root (e.g., in app/layout.tsx).
+ */
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
-
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
-      className="toaster group"
+      theme="light" // force tokens, no theme provider needed
+      position="top-right"
+      duration={3500}
+      closeButton
       toastOptions={{
         classNames: {
-          toast:
-            "group toast group-[.toaster]:bg-white group-[.toaster]:text-zinc-950 group-[.toaster]:border-zinc-200 group-[.toaster]:shadow-lg dark:group-[.toaster]:bg-zinc-950 dark:group-[.toaster]:text-zinc-50 dark:group-[.toaster]:border-zinc-800",
-          description:
-            "group-[.toast]:text-zinc-500 dark:group-[.toast]:text-zinc-400",
+          // Toast surface
+          toast: [
+            "rounded-10 border border-border shadow-sm",
+            "bg-card text-card-foreground",
+          ].join(" "),
+          // Title & description
+          title: "text-body-medium font-medium",
+          description: "text-body-medium text-muted-foreground",
+          // Buttons
           actionButton:
-            "group-[.toast]:bg-zinc-900 group-[.toast]:text-zinc-50 dark:group-[.toast]:bg-zinc-50 dark:group-[.toast]:text-zinc-900",
+            "rounded-8 border border-border bg-background px-10 py-6 text-body-medium hover:bg-secondary",
           cancelButton:
-            "group-[.toast]:bg-zinc-100 group-[.toast]:text-zinc-500 dark:group-[.toast]:bg-zinc-800 dark:group-[.toast]:text-zinc-400",
+            "rounded-8 bg-background px-10 py-6 text-body-medium hover:bg-secondary",
+          // Close icon
+          closeButton: "opacity-70 hover:opacity-100",
+          // Variants use accent colors from tokens
+          success:
+            "border-border bg-card text-card-foreground data-[type=success]:[--accent:theme(colors.accent-forest)]",
+          error:
+            "border-border bg-card text-card-foreground data-[type=error]:[--accent:theme(colors.accent-crimson)]",
+          warning:
+            "border-border bg-card text-card-foreground data-[type=warning]:[--accent:theme(colors.accent-honey)]",
+          info:
+            "border-border bg-card text-card-foreground data-[type=info]:[--accent:theme(colors.accent-bluetron)]",
         },
       }}
       {...props}
