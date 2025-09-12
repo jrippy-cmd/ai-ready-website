@@ -46,6 +46,7 @@
     "tailwind-gradient-mask-image": "^1.2.0",
     "tailwind-merge": "^2.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.1",
+    "@radix-ui/react-context-menu": "^1.1.4",
     "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
