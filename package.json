@@ -45,6 +45,7 @@
     "sonner": "^1.4.41",
     "tailwind-gradient-mask-image": "^1.2.0",
     "tailwind-merge": "^2.2.1",
+    "react-hook-form": "^7.53.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-context-menu": "^2.2.16",
     "@radix-ui/react-popover": "^1.1.6",
@@ -57,6 +58,8 @@
     "@radix-ui/react-menubar": "^1.1.6",
     "@radix-ui/react-scroll-area": "^1.1.6",
     "@radix-ui/react-toast": "^1.2.8",
+    "@hookform/resolvers": "^3.9.0",
+    "zod": "^3.23.8",
     "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
