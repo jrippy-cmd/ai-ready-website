@@ -4,19 +4,22 @@ import { Config } from "tailwindcss/types/config";
 
 import colorsJson from "./colors.json";
 
+/**
+ * Keep your existing colors.json mapping.
+ * These become classes like text-brand, bg-brand-100, etc, depending on your json keys.
+ */
 const colors = Object.keys(colorsJson).reduce(
   (acc, key) => {
     acc[key] = `var(--${key})`;
-
     return acc;
   },
   {} as Record<string, string>
 );
 
+/** Utility scales you already had */
 const sizes = Array.from({ length: 1000 }, (_, i) => i).reduce(
   (acc, curr) => {
     acc[curr] = `${curr}px`;
-
     return acc;
   },
   {
@@ -39,7 +42,6 @@ const sizes = Array.from({ length: 1000 }, (_, i) => i).reduce(
 const opacities = Array.from({ length: 100 }, (_, i) => i).reduce(
   (acc, curr) => {
     acc[curr] = curr / 100 + "";
-
     return acc;
   },
   {} as Record<string, string>
@@ -48,19 +50,23 @@ const opacities = Array.from({ length: 100 }, (_, i) => i).reduce(
 const transitionDurations = Array.from({ length: 60 }, (_, i) => i).reduce(
   (acc, curr) => {
     acc[curr] = curr * 50 + "";
-
     return acc;
   },
   {} as Record<string, string>
 );
 
 const themeConfig: Config = {
+  darkMode: ["class"],
+
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./components-new/**/*.{ts,tsx}",
-    // "./styles-marketing/**/*.{ts,tsx}"
+    "./atoms/**/*.{ts,tsx}",
+    "./hooks/**/*.{ts,tsx}",
+    "./styles/**/*.{ts,tsx}"
   ],
+
   theme: {
     extend: {
       fontFamily: {
@@ -68,165 +74,73 @@ const themeConfig: Config = {
         mono: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.mono],
         ascii: ["var(--font-roboto-mono)", ...defaultTheme.fontFamily.mono]
       },
+
       fontSize: {
-        "title-h1": [
-          "60px",
-          {
-            "lineHeight": "64px",
-            "letterSpacing": "-0.3px",
-            "fontWeight": "500"
-          }
-        ],
-        "title-h2": [
-          "52px",
-          {
-            "lineHeight": "56px",
-            "letterSpacing": "-0.52px",
-            "fontWeight": "500"
-          }
-        ],
-        "title-h3": [
-          "40px",
-          {
-            "lineHeight": "44px",
-            "letterSpacing": "-0.4px",
-            "fontWeight": "500"
-          }
-        ],
-        "title-h4": [
-          "32px",
-          {
-            "lineHeight": "36px",
-            "letterSpacing": "-0.32px",
-            "fontWeight": "500"
-          }
-        ],
-        "title-h5": [
-          "24px",
-          {
-            "lineHeight": "32px",
-            "letterSpacing": "-0.24px",
-            "fontWeight": "500"
-          }
-        ],
-        "body-x-large": [
-          "20px",
-          {
-            "lineHeight": "28px",
-            "letterSpacing": "-0.1px",
-            "fontWeight": "400"
-          }
-        ],
-        "body-large": [
-          "16px",
-          {
-            "lineHeight": "24px",
-            "letterSpacing": "0px",
-            "fontWeight": "400"
-          }
-        ],
-        "body-medium": [
-          "14px",
-          {
-            "lineHeight": "20px",
-            "letterSpacing": "0.14px",
-            "fontWeight": "400"
-          }
-        ],
-        "body-small": [
-          "13px",
-          {
-            "lineHeight": "20px",
-            "letterSpacing": "0px",
-            "fontWeight": "400"
-          }
-        ],
-        "body-input": [
-          "15px",
-          {
-            "lineHeight": "24px",
-            "letterSpacing": "0px",
-            "fontWeight": "400"
-          }
-        ],
-        "label-x-large": [
-          "20px",
-          {
-            "lineHeight": "28px",
-            "letterSpacing": "-0.1px",
-            "fontWeight": "450"
-          }
-        ],
-        "label-large": [
-          "16px",
-          {
-            "lineHeight": "24px",
-            "letterSpacing": "0px",
-            "fontWeight": "450"
-          }
-        ],
-        "label-medium": [
-          "14px",
-          {
-            "lineHeight": "20px",
-            "letterSpacing": "0px",
-            "fontWeight": "450"
-          }
-        ],
-        "label-small": [
-          "13px",
-          {
-            "lineHeight": "20px",
-            "letterSpacing": "0px",
-            "fontWeight": "450"
-          }
-        ],
-        "label-x-small": [
-          "12px",
-          {
-            "lineHeight": "20px",
-            "letterSpacing": "0px",
-            "fontWeight": "450"
-          }
-        ],
-        "mono-medium": [
-          "14px",
-          {
-            "lineHeight": "22px",
-            "letterSpacing": "0px",
-            "fontWeight": "400"
-          }
-        ],
-        "mono-small": [
-          "13px",
-          {
-            "lineHeight": "20px",
-            "letterSpacing": "0px",
-            "fontWeight": "500"
-          }
-        ],
-        "mono-x-small": [
-          "12px",
-          {
-            "lineHeight": "16px",
-            "letterSpacing": "0px",
-            "fontWeight": "400"
-          }
-        ],
-        "title-blog": [
-          "28px",
-          {
-            "lineHeight": "36px",
-            "letterSpacing": "-0.28px",
-            "fontWeight": "500"
-          }
-        ]
+        "title-h1": ["60px", { lineHeight: "64px", letterSpacing: "-0.3px", fontWeight: "500" }],
+        "title-h2": ["52px", { lineHeight: "56px", letterSpacing: "-0.52px", fontWeight: "500" }],
+        "title-h3": ["40px", { lineHeight: "44px", letterSpacing: "-0.4px", fontWeight: "500" }],
+        "title-h4": ["32px", { lineHeight: "36px", letterSpacing: "-0.32px", fontWeight: "500" }],
+        "title-h5": ["24px", { lineHeight: "32px", letterSpacing: "-0.24px", fontWeight: "500" }],
+        "body-x-large": ["20px", { lineHeight: "28px", letterSpacing: "-0.1px", fontWeight: "400" }],
+        "body-large": ["16px", { lineHeight: "24px", letterSpacing: "0px", fontWeight: "400" }],
+        "body-medium": ["14px", { lineHeight: "20px", letterSpacing: "0.14px", fontWeight: "400" }],
+        "body-small": ["13px", { lineHeight: "20px", letterSpacing: "0px", fontWeight: "400" }],
+        "body-input": ["15px", { lineHeight: "24px", letterSpacing: "0px", fontWeight: "400" }],
+        "label-x-large": ["20px", { lineHeight: "28px", letterSpacing: "-0.1px", fontWeight: "450" }],
+        "label-large": ["16px", { lineHeight: "24px", letterSpacing: "0px", fontWeight: "450" }],
+        "label-medium": ["14px", { lineHeight: "20px", letterSpacing: "0px", fontWeight: "450" }],
+        "label-small": ["13px", { lineHeight: "20px", letterSpacing: "0px", fontWeight: "450" }],
+        "label-x-small": ["12px", { lineHeight: "20px", letterSpacing: "0px", fontWeight: "450" }],
+        "mono-medium": ["14px", { lineHeight: "22px", letterSpacing: "0px", fontWeight: "400" }],
+        "mono-small": ["13px", { lineHeight: "20px", letterSpacing: "0px", fontWeight: "500" }],
+        "mono-x-small": ["12px", { lineHeight: "16px", letterSpacing: "0px", fontWeight: "400" }],
+        "title-blog": ["28px", { lineHeight: "36px", letterSpacing: "-0.28px", fontWeight: "500" }]
       },
+
       colors: {
         transparent: "transparent",
         current: "currentColor",
-        ...colors
+
+        /**
+         * Your existing JSON-driven tokens (CSS variables like --brand-500, etc).
+         * These resolve as raw var(--token) for cases where you want direct var usage.
+         */
+        ...colors,
+
+        /**
+         * shadcn-style semantic tokens.
+         * These expect your CSS to define HSL channel triplets, e.g. --primary: 217 98% 51%;
+         * Then classes like bg-primary, text-foreground, border-border, ring-ring will work.
+         */
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+
+        card: "hsl(var(--card))",
+        "card-foreground": "hsl(var(--card-foreground))",
+
+        popover: "hsl(var(--popover))",
+        "popover-foreground": "hsl(var(--popover-foreground))",
+
+        primary: "hsl(var(--primary))",
+        "primary-foreground": "hsl(var(--primary-foreground))",
+
+        secondary: "hsl(var(--secondary))",
+        "secondary-foreground": "hsl(var(--secondary-foreground))",
+
+        muted: "hsl(var(--muted))",
+        "muted-foreground": "hsl(var(--muted-foreground))",
+
+        accent: "hsl(var(--accent))",
+        "accent-foreground": "hsl(var(--accent-foreground))",
+
+        destructive: "hsl(var(--destructive))",
+        "destructive-foreground": "hsl(var(--destructive-foreground))",
+
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))"
       },
+
       screens: {
         xs: { min: "390px" },
         "xs-max": { max: "389px" },
@@ -241,23 +155,25 @@ const themeConfig: Config = {
       },
 
       opacity: opacities,
+
       spacing: {
         ...sizes,
-        'root': 'var(--root-padding)'
+        root: "var(--root-padding)"
       },
       width: sizes,
       maxWidth: sizes,
       height: sizes,
       inset: sizes,
       borderWidth: sizes,
+
       backdropBlur: Array.from({ length: 20 }, (_, i) => i).reduce(
         (acc, curr) => {
           acc[curr] = curr + "px";
-
           return acc;
         },
         {} as Record<string, string>
       ),
+
       transitionTimingFunction: { DEFAULT: "cubic-bezier(0.25, 0.1, 0.25, 1)" },
       transitionDuration: {
         DEFAULT: "200ms",
@@ -266,44 +182,41 @@ const themeConfig: Config = {
       transitionDelay: {
         ...transitionDurations
       },
+
       borderRadius: (() => {
         const radius: Record<string | number, string> = {
           full: "999px",
           inherit: "inherit",
           0: "0px"
         };
-
         for (let i = 1; i <= 32; i += 1) {
           radius[i] = `${i}px`;
         }
-
         return radius;
       })()
     }
   },
+
   variants: { extend: { top: ["before"] } },
-  corePlugins: {
-    container: false
-  },
+
+  corePlugins: { container: false },
+
   plugins: [
     ({
       addUtilities, matchUtilities
     }: any) => {
       addUtilities({
         ".inside-border": {
-          "@apply pointer-events-none absolute inset-0 rounded-inherit border transition-all":
-            {}
+          "@apply pointer-events-none absolute inset-0 rounded-inherit border transition-all": {}
         },
         ".inside-border-x": {
-          "@apply pointer-events-none absolute inset-0 rounded-inherit border-x transition-all":
-            {}
+          "@apply pointer-events-none absolute inset-0 rounded-inherit border-x transition-all": {}
         },
         ".inside-border-y": {
-          "@apply pointer-events-none absolute inset-0 rounded-inherit border-y transition-all":
-            {}
+          "@apply pointer-events-none absolute inset-0 rounded-inherit border-y transition-all": {}
         },
-        '.mask-border': {
-          "mask": "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+        ".mask-border": {
+          mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           "mask-composite": "exclude",
           "pointer-events": "none"
         },
@@ -314,27 +227,19 @@ const themeConfig: Config = {
         ".overlay": { "@apply absolute top-0 left-0 w-full h-full rounded-inherit": {} },
         ".text-gradient": { "@apply !bg-clip-text !text-transparent": {} }
       });
+
       matchUtilities(
         {
-          'cw': (value: string) => {
+          cw: (value: string) => {
             const width = parseInt(value);
-
-            return {
-              width: value,
-              left: `calc(50% - ${width / 2}px)`
-            };
+            return { width: value, left: `calc(50% - ${width / 2}px)` };
           },
-          'ch': (value: string) => {
+          ch: (value: string) => {
             const height = parseInt(value);
-
-            return {
-              height: value,
-              top: `calc(50% - ${height / 2}px)`
-            };
+            return { height: value, top: `calc(50% - ${height / 2}px)` };
           },
-          'cs': (value: string) => {
+          cs: (value: string) => {
             const size = parseInt(value);
-
             return {
               width: size,
               height: size,
@@ -342,33 +247,26 @@ const themeConfig: Config = {
               top: `calc(50% - ${size / 2}px)`
             };
           },
-          'cmw': (value: string) => {
-            const [maxWidth, paddingX] = value.split(',').map((v) => parseInt(v));
-
-            const width = paddingX ? `calc(100% - ${paddingX * 2}px)` : '100%';
-
+          cmw: (value: string) => {
+            const [maxWidth, paddingX] = value.split(",").map((v) => parseInt(v));
+            const width = paddingX ? `calc(100% - ${paddingX * 2}px)` : "100%";
             return {
               maxWidth: maxWidth,
               width,
               left: `calc(50% - (min(${maxWidth}px, ${width}) / 2))`
             };
           },
-          'mw': (value: string) => {
-            const [maxWidth, paddingX] = value.split(',').map((v) => parseInt(v));
-
-            const width = paddingX ? `calc(100% - ${paddingX * 2}px)` : '100%';
-
-            return {
-              maxWidth: maxWidth,
-              width
-            };
+          mw: (value: string) => {
+            const [maxWidth, paddingX] = value.split(",").map((v) => parseInt(v));
+            const width = paddingX ? `calc(100% - ${paddingX * 2}px)` : "100%";
+            return { maxWidth: maxWidth, width };
           }
         },
         { values: sizes }
       );
     },
     require("tailwind-gradient-mask-image"),
-    require("@tailwindcss/typography"),
+    require("@tailwindcss/typography")
   ]
 };
 
