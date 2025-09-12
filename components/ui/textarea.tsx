@@ -7,19 +7,34 @@ export interface TextareaProps
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
     return (
-      <textarea
-        ref={ref}
+      <label
         className={cn(
-          // base styling
-          "flex min-h-[80px] w-full rounded-md border border-border bg-background text-foreground",
-          "px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground",
-          // focus & disabled states
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-          "disabled:cursor-not-allowed disabled:opacity-50",
+          // layout
+          "block w-full cursor-text rounded-8 px-12 py-8 transition-all",
+          // surfaces & border (tokens)
+          "bg-background text-foreground border border-border",
+          // hover nuance
+          "hover:bg-secondary",
+          // focus ring on wrapper
+          "focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
+          // disabled support
+          "aria-disabled:opacity-50 aria-disabled:cursor-not-allowed",
+          // type ramp
+          "text-body-medium",
           className
         )}
-        {...props}
-      />
+        aria-disabled={props.disabled ? true : undefined}
+      >
+        <textarea
+          ref={ref}
+          {...props}
+          className={cn(
+            "w-full min-h-[120px] bg-transparent outline-none resize-y",
+            "placeholder:text-muted-foreground",
+            "disabled:cursor-not-allowed"
+          )}
+        />
+      </label>
     );
   }
 );
