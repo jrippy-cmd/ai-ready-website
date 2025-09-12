@@ -6,119 +6,109 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Brand link color */
+/* Brand link color via token */
 a { color: hsl(var(--primary)); }
 a:hover { color: hsl(var(--primary) / 0.9); }
 
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
 
-.height-screen-helper {
-  min-height: calc(100vh - 80px);
-}
+.height-screen-helper { min-height: calc(100vh - 80px); }
 
+/* ===============================
+   THEME: map shadcn tokens to colors.json variables
+   colors.json defines:
+   --heat-*, --accent-black/white, --border-*, --background-*, etc.
+   =============================== */
 @layer base {
   :root {
     /* Surfaces */
-    --background: 0 0% 100%;       /* #FFFFFF */
-    --foreground: 0 0% 7.8%;       /* #141414 */
+    --background: var(--background-base);
+    --foreground: var(--accent-black);
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 7.8%;
+    --card: var(--accent-white);
+    --card-foreground: var(--accent-black);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 7.8%;
+    --popover: var(--accent-white);
+    --popover-foreground: var(--accent-black);
 
-    /* Localhowl brand blue */
-    --primary: 217 98% 51%;        /* #0865FC */
-    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    /* Localhowl brand (from colors.json) */
+    --primary: var(--heat-100);
+    --primary-foreground: var(--accent-white);
 
-    /* Subtle surfaces */
-    --secondary: 0 0% 95.7%;       /* #F4F4F4 */
-    --secondary-foreground: 0 0% 7.8%;
+    /* Subtle / neutral */
+    --secondary: var(--black-alpha-4);
+    --secondary-foreground: var(--accent-black);
 
-    --muted: 0 0% 95.7%;           /* #F4F4F4 */
-    --muted-foreground: 0 0% 40%;  /* #666666 */
+    --muted: var(--black-alpha-4);
+    --muted-foreground: var(--black-alpha-72);
 
-    /* Accent surfaces */
-    --accent: 0 0% 95.7%;
-    --accent-foreground: 0 0% 7.8%;
+    /* Generic accent surface */
+    --accent: var(--black-alpha-4);
+    --accent-foreground: var(--accent-black);
 
     /* Feedback */
-    --destructive: 0 84% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: var(--accent-crimson);
+    --destructive-foreground: var(--accent-white);
 
     /* Framing */
-    --border: 0 0% 90%;            /* #E6E6E6 */
-    --input: 0 0% 90%;
-    --ring: 217 98% 51%;           /* brand for focus outlines */
+    --border: var(--border-faint);
+    --input: var(--border-faint);
+    --ring: var(--heat-100); /* focus outlines use brand */
 
     /* Global rounding */
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
-  /* Dark theme */
+  /* If/when you enable dark mode, these are sane defaults.
+     (You can delete this block to keep light-only.) */
   .dark {
-    --background: 0 0% 7.5%;
-    --foreground: 0 0% 95%;
+    --background: var(--accent-black);
+    --foreground: var(--accent-white);
 
-    --card: 0 0% 7.5%;
-    --card-foreground: 0 0% 95%;
+    --card: color-mix(in oklab, var(--accent-black) 90%, white 10%);
+    --card-foreground: var(--accent-white);
 
-    --popover: 0 0% 7.5%;
-    --popover-foreground: 0 0% 95%;
+    --popover: var(--card);
+    --popover-foreground: var(--accent-white);
 
-    --primary: 217 95% 60%;        /* brighter brand for dark */
-    --primary-foreground: 0 0% 100%;
+    --primary: var(--heat-100);
+    --primary-foreground: var(--accent-white);
 
-    --secondary: 220 6% 12%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: color-mix(in oklab, black 85%, white 15%);
+    --secondary-foreground: var(--accent-white);
 
-    --muted: 220 6% 12%;
-    --muted-foreground: 0 0% 62.7%;
+    --muted: color-mix(in oklab, black 85%, white 15%);
+    --muted-foreground: color-mix(in oklab, white 65%, black 35%);
 
-    --accent: 220 6% 12%;
-    --accent-foreground: 0 0% 95%;
+    --accent: color-mix(in oklab, black 85%, white 15%);
+    --accent-foreground: var(--accent-white);
 
-    --destructive: 0 70% 40%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: var(--accent-crimson);
+    --destructive-foreground: var(--accent-white);
 
-    --border: 220 6% 18%;
-    --input: 220 6% 18%;
-    --ring: 217 95% 60%;
+    --border: color-mix(in oklab, white 14%, black 86%);
+    --input: var(--border);
+    --ring: var(--heat-100);
   }
 }
 
+/* Utilities */
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
   /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;     /* Firefox */
-  }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
-.ReactModal__Overlay {
-  opacity: 0;
-  transition: opacity 300ms ease-in-out;
-}
-
-.ReactModal__Overlay--after-open {
-  opacity: 1;
-}
-
-.ReactModal__Overlay--before-close {
-  opacity: 0;
-}
+/* React Modal animations */
+.ReactModal__Overlay { opacity: 0; transition: opacity 300ms ease-in-out; }
+.ReactModal__Overlay--after-open { opacity: 1; }
+.ReactModal__Overlay--before-close { opacity: 0; }
 
 .DialogOverlay {
   background-color: rgba(0, 0, 0, 0.5);
@@ -146,20 +136,10 @@ a:hover { color: hsl(var(--primary) / 0.9); }
 }
 .DialogContent:focus { outline: none; }
 
-.DialogTitle {
-  margin: 0;
-  font-weight: 500;
-  color: #000;
-  font-size: 17px;
-}
+.DialogTitle { margin: 0; font-weight: 500; color: #000; font-size: 17px; }
+.DialogDescription { margin: 10px 0 20px; color: #000; font-size: 15px; line-height: 1.5; }
 
-.DialogDescription {
-  margin: 10px 0 20px;
-  color: #000;
-  font-size: 15px;
-  line-height: 1.5;
-}
-
+/* Legacy .FireButton (kept for compatibility) */
 .FireButton {
   color: #f8fafc;
   background-color: #111827;
@@ -171,22 +151,17 @@ a:hover { color: hsl(var(--primary) / 0.9); }
 }
 .FireButton:hover { box-shadow: 0 0 8px 2px #ff5d22af; }
 
-@keyframes overlayShow {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
+/* Animations */
+@keyframes overlayShow { from { opacity: 0; } to { opacity: 1; } }
 @keyframes contentShow {
   from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 .blog-heading:target { padding-bottom: 120px !important; }
 
 @layer utilities {
-  .extra-space {
-    position: relative;
-  }
+  .extra-space { position: relative; }
   .extra-space::after {
     --target-size: 20px;
     content: '';
@@ -198,15 +173,13 @@ a:hover { color: hsl(var(--primary) / 0.9); }
     animation: marquee var(--speed, 10s) linear infinite var(--direction, forwards);
   }
 
-  @keyframes marquee {
-    to { transform: translateX(-50%); }
-  }
+  @keyframes marquee { to { transform: translateX(-50%); } }
 }
 
 /* Hide reCAPTCHA badge if present */
 .grecaptcha-badge { visibility: hidden; }
 
-/* Remove all focus styles from hero input */
+/* Remove all focus styles from hero input (hero input has its own styles) */
 input[type="text"]:focus,
 input[type="text"]:focus-visible {
   outline: none !important;
