@@ -3,12 +3,16 @@
 import { forwardRef } from "react";
 import dynamic from "next/dynamic";
 
-// Static hero title text
-const originalText = "Is your website <br class='lg-max:hidden'><span>AI Ready?</span>";
+/** Keep this so other components can import it without breaking. */
+export function encryptText(text: string, _progress?: number) {
+  // No-op: just return the original text (we're not animating right now)
+  return text;
+}
 
-/**
- * Wrapper that applies typography and brand colors
- */
+const originalText =
+  "Is your website <br class='lg-max:hidden'><span>AI Ready?</span>";
+
+/** Wrapper applies typography + brand colors */
 const Wrapper = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -25,23 +29,14 @@ const Wrapper = forwardRef<
     </div>
   );
 });
-
 Wrapper.displayName = "Wrapper";
 
-/**
- * Hero Title Component
- */
+/** Hero Title */
 function HomeHeroTitle() {
-  return (
-    <Wrapper
-      dangerouslySetInnerHTML={{ __html: originalText }}
-    />
-  );
+  return <Wrapper dangerouslySetInnerHTML={{ __html: originalText }} />;
 }
 
 export default dynamic(() => Promise.resolve(HomeHeroTitle), {
   ssr: false,
-  loading: () => (
-    <Wrapper dangerouslySetInnerHTML={{ __html: originalText }} />
-  ),
+  loading: () => <Wrapper dangerouslySetInnerHTML={{ __html: originalText }} />,
 });
