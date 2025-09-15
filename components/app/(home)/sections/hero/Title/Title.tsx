@@ -3,9 +3,9 @@
 import { forwardRef } from "react";
 import dynamic from "next/dynamic";
 
-/** Keep this so other components can import it without breaking. */
+/** Keep this named export so other modules can import it safely. */
 export function encryptText(text: string, _progress?: number) {
-  // No-op: just return the original text (we're not animating right now)
+  // No-op: return the original text (we’re not animating right now)
   return text;
 }
 
