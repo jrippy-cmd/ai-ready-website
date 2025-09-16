@@ -253,7 +253,8 @@ export function AnimatedDotIcon({
     const scaler = size / 20;
 
     const render = () => {
-      ctx.fillStyle = "#fa5d19";
+      // CHANGED: brand color
+      ctx.fillStyle = "#0865FC";
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (const group of config.grid.slice(0, 4)) {
