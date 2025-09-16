@@ -139,17 +139,7 @@ export default function StyleGuidePage() {
               </div>
               
               <div className="flex gap-8">
-                {/* GitHub Template Button */}
-                <a
-                  className="contents"
-                  href="https://github.com/firecrawl/ai-ready-website"
-                  target="_blank"
-                >
-                  <ButtonUI variant="tertiary">
-                    <GithubIcon />
-                    Use this Template
-                  </ButtonUI>
-                </a>
+              
               </div>
             </div>
           </HeaderWrapper>
@@ -182,10 +172,10 @@ export default function StyleGuidePage() {
                   </p>
                   <Link
                     className="bg-black-alpha-4 hover:bg-black-alpha-6 rounded-6 px-8 lg:px-6 text-label-large h-30 lg:h-24 block mt-8 mx-auto w-max gap-4 transition-all"
-                    href="#"
+                    href="https://www.localhowl.com/"
                     onClick={(e) => e.preventDefault()}
                   >
-                    Powered by Firecrawl.
+                    Powered by Howl IQ.
                   </Link>
                 </motion.div>
               ) : (
