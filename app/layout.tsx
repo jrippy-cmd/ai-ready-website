@@ -25,15 +25,13 @@ export const metadata: Metadata = {
   },
   description: "Check if your site is AI-ready by Localhowl",
   icons: {
-    // Keep /favicon.png if you’re using a single PNG in /public or app/icon.png for auto.
-    icon: [{ url: "/favicon.png", type: "image/png" }],
-    // Optional extras if you add the files to /public:
-    // icon: [
-    //   { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    //   { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-    // ],
-    apple: "/apple-touch-icon.png", // optional
-    shortcut: "/favicon.ico",       // optional
+    // Keep both: browsers often request /favicon.ico regardless.
+    icon: [
+      { url: "/favicon.ico?v=4" },
+      { url: "/favicon.png?v=4", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png?v=4", sizes: "180x180" }],
+    shortcut: "/favicon.ico?v=4",
   },
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
