@@ -15,51 +15,54 @@ interface RadarChartProps {
 export default function RadarChart({ data, size = 300 }: RadarChartProps) {
   const [isAnimated, setIsAnimated] = useState(false);
   const center = size / 2;
-  const radius = (size / 2) - 60; // Increased padding for labels
+  const radius = size / 2 - 60; // padding for labels
   const angleStep = (Math.PI * 2) / data.length;
-  
+
+  // brand blue
+  const BLUE = "rgb(8, 101, 252)";
+
   useEffect(() => {
     setIsAnimated(true);
   }, []);
-  
+
   // Calculate points for the polygon
   const getPoint = (value: number, index: number) => {
     const angle = index * angleStep - Math.PI / 2;
     const r = (value / 100) * radius;
     return {
       x: center + r * Math.cos(angle),
-      y: center + r * Math.sin(angle)
+      y: center + r * Math.sin(angle),
     };
   };
-  
+
   // Create polygon points string
   const polygonPoints = data
     .map((item, i) => {
       const point = getPoint(isAnimated ? item.score : 0, i);
       return `${point.x},${point.y}`;
     })
-    .join(' ');
-  
+    .join(" ");
+
   // Grid levels
   const gridLevels = [20, 40, 60, 80, 100];
-  
+
   return (
     <div className="relative">
       <svg width={size} height={size} className="overflow-visible">
         <defs>
-          <linearGradient id="radar-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FF4A00" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#FF8533" stopOpacity="0.3" />
+          <linearGradient id="radar-gradient-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={BLUE} stopOpacity="0.85" />
+            <stop offset="100%" stopColor={BLUE} stopOpacity="0.30" />
           </linearGradient>
           <filter id="radar-glow">
-            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
             <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
         </defs>
-        
+
         {/* Grid circles */}
         {gridLevels.map((level) => (
           <circle
@@ -72,7 +75,7 @@ export default function RadarChart({ data, size = 300 }: RadarChartProps) {
             strokeWidth="1"
           />
         ))}
-        
+
         {/* Axis lines */}
         {data.map((_, i) => {
           const angle = i * angleStep - Math.PI / 2;
@@ -90,19 +93,19 @@ export default function RadarChart({ data, size = 300 }: RadarChartProps) {
             />
           );
         })}
-        
+
         {/* Data polygon */}
         <motion.polygon
           points={polygonPoints}
-          fill="url(#radar-gradient)"
-          stroke="#FF4A00"
+          fill="url(#radar-gradient-blue)"
+          stroke={BLUE}
           strokeWidth="2"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           filter="url(#radar-glow)"
         />
-        
+
         {/* Data points */}
         {data.map((item, i) => {
           const point = getPoint(item.score, i);
@@ -112,7 +115,7 @@ export default function RadarChart({ data, size = 300 }: RadarChartProps) {
               cx={point.x}
               cy={point.y}
               r="4"
-              fill="#FF4A00"
+              fill={BLUE}
               stroke="white"
               strokeWidth="2"
               initial={{ scale: 0 }}
@@ -121,39 +124,26 @@ export default function RadarChart({ data, size = 300 }: RadarChartProps) {
             />
           );
         })}
-        
+
         {/* Labels */}
         {data.map((item, i) => {
           const angle = i * angleStep - Math.PI / 2;
-          const labelRadius = radius + 40; // Increased label distance
+          const labelRadius = radius + 40;
           const x = center + labelRadius * Math.cos(angle);
           const y = center + labelRadius * Math.sin(angle);
-          
-          // Better text anchor logic based on quadrant
-          let textAnchor = "middle";
+
+          let textAnchor: "start" | "middle" | "end" = "middle";
           let dy = 0;
-          
-          // Left side
-          if (x < center - 20) {
-            textAnchor = "end";
-          }
-          // Right side
-          else if (x > center + 20) {
-            textAnchor = "start";
-          }
-          
-          // Top
-          if (y < center - 20) {
-            dy = -5;
-          }
-          // Bottom
-          else if (y > center + 20) {
-            dy = 5;
-          }
-          
+
+          if (x < center - 20) textAnchor = "end";
+          else if (x > center + 20) textAnchor = "start";
+
+          if (y < center - 20) dy = -5;
+          else if (y > center + 20) dy = 5;
+
           return (
             <motion.g key={i}>
-              {/* Background for better readability */}
+              {/* light background for readability */}
               <motion.rect
                 x={x - (textAnchor === "middle" ? 30 : textAnchor === "end" ? 60 : 0)}
                 y={y - 10}
@@ -169,13 +159,14 @@ export default function RadarChart({ data, size = 300 }: RadarChartProps) {
               <motion.text
                 x={x}
                 y={y + dy}
-                textAnchor={textAnchor as any}
+                textAnchor={textAnchor}
                 dominantBaseline="middle"
-                className="text-xs fill-black-alpha-80 font-medium"
+                className="text-xs font-medium"
+                fill="rgba(0,0,0,0.8)"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 + i * 0.05 }}
-                style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: "none" }}
               >
                 {item.label}
               </motion.text>
@@ -183,13 +174,14 @@ export default function RadarChart({ data, size = 300 }: RadarChartProps) {
               <motion.text
                 x={x}
                 y={y + dy + 12}
-                textAnchor={textAnchor as any}
+                textAnchor={textAnchor}
                 dominantBaseline="middle"
-                className="text-[10px] fill-heat-100 font-bold"
+                className="text-[10px] font-bold"
+                fill={BLUE}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1.1 + i * 0.05 }}
-                style={{ pointerEvents: 'none' }}
+                style={{ pointerEvents: "none" }}
               >
                 {item.score}%
               </motion.text>
@@ -197,20 +189,29 @@ export default function RadarChart({ data, size = 300 }: RadarChartProps) {
           );
         })}
       </svg>
-      
+
       {/* Legend */}
       <div className="mt-16 flex justify-center">
         <div className="inline-flex flex-row gap-16 text-xs text-black-alpha-48 bg-white px-16 py-8 rounded-6 shadow-sm">
           <div className="flex items-center gap-8">
-            <div className="w-12 h-12 rounded-full bg-heat-200" />
+            <div
+              className="w-12 h-12 rounded-full"
+              style={{ backgroundColor: "rgba(8, 101, 252, 1)" }}
+            />
             <span className="whitespace-nowrap">80-100%</span>
           </div>
           <div className="flex items-center gap-8">
-            <div className="w-12 h-12 rounded-full bg-heat-100" />
+            <div
+              className="w-12 h-12 rounded-full"
+              style={{ backgroundColor: "rgba(8, 101, 252, 0.7)" }}
+            />
             <span className="whitespace-nowrap">60-79%</span>
           </div>
           <div className="flex items-center gap-8">
-            <div className="w-12 h-12 rounded-full bg-heat-50" />
+            <div
+              className="w-12 h-12 rounded-full"
+              style={{ backgroundColor: "rgba(8, 101, 252, 0.4)" }}
+            />
             <span className="whitespace-nowrap">&lt;60%</span>
           </div>
         </div>
