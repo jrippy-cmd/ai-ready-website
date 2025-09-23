@@ -112,19 +112,19 @@ async function analyzeHTML(html: string, metadata: any, url: string): Promise<Ch
   // 70, 50, 30 readability
   // 100, 80, 50, 20
   if (readabilityScore >= 60) {
-    normalizedScore = 90;
+    normalizedScore = 100;
     readabilityStatus = 'pass';
     readabilityDetails = `Very readable (Flesch: ${Math.round(readabilityScore)})`;
   } else if (readabilityScore >= 40) {
-    normalizedScore = 70;
+    normalizedScore = 80;
     readabilityStatus = 'pass';
     readabilityDetails = `Good readability (Flesch: ${Math.round(readabilityScore)})`;
   } else if (readabilityScore >= 20) {
-    normalizedScore = 40;
+    normalizedScore = 50;
     readabilityStatus = 'warning';
     readabilityDetails = `Difficult to read (Flesch: ${Math.round(readabilityScore)})`;
   } else {
-    normalizedScore = 10;
+    normalizedScore = 20;
     readabilityStatus = 'fail';
     readabilityDetails = `Very difficult (Flesch: ${Math.round(readabilityScore)})`;
   }
