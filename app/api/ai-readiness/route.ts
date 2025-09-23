@@ -528,7 +528,7 @@ export async function POST(request: NextRequest) {
     
     // Calculate overall score with weighted categories
     // Refined weights based on benchmark testing
-    // Readability 1.5
+    // Readability 1.5, llms .3, sitemap .8, robots .9
     const weights = {
       // Page-Level Metrics (Most important)
       'readability': 0.5,         // Important but not overwhelming
@@ -536,9 +536,9 @@ export async function POST(request: NextRequest) {
       'meta-tags': 1.2,            // Basic requirement
       
       // Domain-Level Checks (Moderate importance)
-      'robots-txt': 0.9,
-      'sitemap': 0.8,
-      'llms-txt': 0.3,             // Very rare, minimal weight
+      'robots-txt': 1.0,
+      'sitemap': 1.0,
+      'llms-txt': 0.8,             // Very rare, minimal weight
       
       // Supporting Metrics
       'semantic-html': 1.0,
