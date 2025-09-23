@@ -536,8 +536,8 @@ export async function POST(request: NextRequest) {
       'meta-tags': 1.2,            // Basic requirement
       
       // Domain-Level Checks (Moderate importance)
-      'robots-txt': 0.9,
-      'sitemap': 0.8,
+      'robots-txt': 1.5,
+      'sitemap': 1.4,
       'llms-txt': 1.0,             // Very rare, minimal weight
       
       // Supporting Metrics
