@@ -531,14 +531,14 @@ export async function POST(request: NextRequest) {
     // Readability 1.5, llms .3, sitemap .8, robots .9
     const weights = {
       // Page-Level Metrics (Most important)
-      'readability': 1.5,         // Important but not overwhelming
+      'readability': 0.3,         // Important but not overwhelming
       'heading-structure': 1.4,    // Good signal
       'meta-tags': 1.2,            // Basic requirement
       
       // Domain-Level Checks (Moderate importance)
       'robots-txt': 0.9,
       'sitemap': 0.8,
-      'llms-txt': 0.3,             // Very rare, minimal weight
+      'llms-txt': 1.0,             // Very rare, minimal weight
       
       // Supporting Metrics
       'semantic-html': 1.0,
