@@ -111,7 +111,7 @@ async function analyzeHTML(html: string, metadata: any, url: string): Promise<Ch
 
   // 70, 50, 30 readability
   // 100, 80, 50, 20
-  if (readabilityScore >= 70) {
+  if (readabilityScore >= 60) {
     normalizedScore = 100;
     readabilityStatus = 'pass';
     readabilityDetails = `Very readable (Flesch: ${Math.round(readabilityScore)})`;
