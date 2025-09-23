@@ -528,9 +528,10 @@ export async function POST(request: NextRequest) {
     
     // Calculate overall score with weighted categories
     // Refined weights based on benchmark testing
+    // Readability 1.5
     const weights = {
       // Page-Level Metrics (Most important)
-      'readability': 1.0,         // Important but not overwhelming
+      'readability': 0.5,         // Important but not overwhelming
       'heading-structure': 1.4,    // Good signal
       'meta-tags': 1.2,            // Basic requirement
       
