@@ -112,15 +112,15 @@ async function analyzeHTML(html: string, metadata: any, url: string): Promise<Ch
   // 70, 50, 30 readability
   // 100, 80, 50, 20
   if (readabilityScore >= 70) {
-    normalizedScore = 90;
+    normalizedScore = 100;
     readabilityStatus = 'pass';
     readabilityDetails = `Very readable (Flesch: ${Math.round(readabilityScore)})`;
   } else if (readabilityScore >= 50) {
-    normalizedScore = 85;
+    normalizedScore = 80;
     readabilityStatus = 'pass';
     readabilityDetails = `Good readability (Flesch: ${Math.round(readabilityScore)})`;
   } else if (readabilityScore >= 30) {
-    normalizedScore = 55;
+    normalizedScore = 50;
     readabilityStatus = 'warning';
     readabilityDetails = `Difficult to read (Flesch: ${Math.round(readabilityScore)})`;
   } else {
@@ -531,12 +531,12 @@ export async function POST(request: NextRequest) {
     // Readability 1.5, llms .3, sitemap .8, robots .9
     const weights = {
       // Page-Level Metrics (Most important)
-      'readability': 0.5,         // Important but not overwhelming
+      'readability': 0.3,         // Important but not overwhelming
       'heading-structure': 1.4,    // Good signal
       'meta-tags': 1.2,            // Basic requirement
       
       // Domain-Level Checks (Moderate importance)
-      'robots-txt': 1.0,
+      'robots-txt': 1.1,
       'sitemap': 1.0,
       'llms-txt': 0.8,             // Very rare, minimal weight
       
