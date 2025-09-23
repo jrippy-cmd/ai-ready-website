@@ -530,7 +530,7 @@ export async function POST(request: NextRequest) {
     // Refined weights based on benchmark testing
     const weights = {
       // Page-Level Metrics (Most important)
-      'readability': 1.5,         // Important but not overwhelming
+      'readability': 1.0,         // Important but not overwhelming
       'heading-structure': 1.4,    // Good signal
       'meta-tags': 1.2,            // Basic requirement
       
