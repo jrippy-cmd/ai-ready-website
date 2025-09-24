@@ -9,7 +9,7 @@ interface CheckResult {
   id: string;
   label: string;
   status: 'pass' | 'fail' | 'warning';
-  score: number;
+  score: number; 
   details: string;
   recommendation: string;
 }
