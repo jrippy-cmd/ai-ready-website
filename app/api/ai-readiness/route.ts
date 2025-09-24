@@ -9,7 +9,7 @@ interface CheckResult {
   id: string;
   label: string;
   status: 'pass' | 'fail' | 'warning';
-  score: number; 
+  score: number;
   details: string;
   recommendation: string;
 }
@@ -113,20 +113,19 @@ async function analyzeHTML(html: string, metadata: any, url: string): Promise<Ch
     normalizedScore = 100;
     readabilityStatus = 'pass';
     readabilityDetails = `Very readable (Flesch: ${Math.round(readabilityScore)})`;
-  //} else if (readabilityScore >= 50) {
-  } else (readabilityScore >= 0) {
+  } else if (readabilityScore >= 50) {
     normalizedScore = 80;
     readabilityStatus = 'pass';
     readabilityDetails = `Good readability (Flesch: ${Math.round(readabilityScore)})`;
-  } //else if (readabilityScore >= 30) {
-    //normalizedScore = 50;
-    //readabilityStatus = 'warning';
-    //readabilityDetails = `Difficult to read (Flesch: ${Math.round(readabilityScore)})`;
-  //} else {
-    //normalizedScore = 20;
-    //readabilityStatus = 'fail';
-    //readabilityDetails = `Very difficult (Flesch: ${Math.round(readabilityScore)})`;
-  //}
+  } else if (readabilityScore >= 30) {
+    normalizedScore = 50;
+    readabilityStatus = 'warning';
+    readabilityDetails = `Difficult to read (Flesch: ${Math.round(readabilityScore)})`;
+  } else {
+    normalizedScore = 20;
+    readabilityStatus = 'fail';
+    readabilityDetails = `Very difficult (Flesch: ${Math.round(readabilityScore)})`;
+  }
   
   results.push({
     id: 'readability',
