@@ -86,7 +86,7 @@ function generateMockInsights(url: string = 'https://example.com') {
       {
         id: 'content-quality',
         label: 'Content Quality for AI',
-        score: 60,
+        score: 70,
         status: 'warning',
         details: 'Content is generally well-structured with clear paragraphs and headings. Some sections could benefit from better semantic markup.',
         recommendation: 'Great structure! Your headings are descriptive and paragraphs are well-organized.',
