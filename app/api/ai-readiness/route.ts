@@ -108,9 +108,7 @@ async function analyzeHTML(html: string, metadata: any, url: string): Promise<Ch
   let readabilityStatus: 'pass' | 'warning' | 'fail' = 'pass';
   let readabilityDetails = '';
   let normalizedScore = 0;
-
-  // 70, 50, 30 readability
-  // 100, 80, 50, 20
+  
   if (readabilityScore >= 70) {
     normalizedScore = 100;
     readabilityStatus = 'pass';
@@ -123,9 +121,8 @@ async function analyzeHTML(html: string, metadata: any, url: string): Promise<Ch
     normalizedScore = 50;
     readabilityStatus = 'warning';
     readabilityDetails = `Difficult to read (Flesch: ${Math.round(readabilityScore)})`;
-    //readabilityDetails = `Work (Flesch: ${Math.round(readabilityScore)})`;
   } else {
-    normalizedScore => 20;
+    normalizedScore = 20;
     readabilityStatus = 'fail';
     readabilityDetails = `Very difficult (Flesch: ${Math.round(readabilityScore)})`;
   }
@@ -529,7 +526,6 @@ export async function POST(request: NextRequest) {
     
     // Calculate overall score with weighted categories
     // Refined weights based on benchmark testing
-    // Readability 1.5, llms .3, sitemap .8, robots .9
     const weights = {
       // Page-Level Metrics (Most important)
       'readability': 1.5,         // Important but not overwhelming
